@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Login from '@/views/Login'
-import Logout from '@/views/Logout'
 import Layout from '@/views/Layout'
 import Dashboard from '@/views/Dashboard'
 import PartnersList from '@/views/Partners/List'
@@ -30,7 +30,6 @@ const router = new Router({
     {
       path: '/logout',
       name: 'logout',
-      component: Logout,
       beforeEnter: (to, from, next) => {
         delete localStorage.token
         next('/login')
@@ -73,9 +72,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (!to.matched.some(record => record.meta.isPublic) && !localStorage.getItem('token') && to.path !== '/login') {
-    next({
-      path: '/login', query: { redirect: to.fullPath }
-    })
+    next('/login')
   } else {
     next()
   }
