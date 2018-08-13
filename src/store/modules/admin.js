@@ -3,8 +3,8 @@ export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 
 const user = {
   state: {
-    token: localStorage.getItem('token') || '',
-    authenticated: localStorage.getItem('token') !== ''
+    token: localStorage.getItem('token') || null,
+    authenticated: localStorage.getItem('authenticated') || null
   },
   getters: {
 
@@ -19,8 +19,8 @@ const user = {
     [ADMIN_LOGOUT]: function (state) {
       state.authenticated = false
       state.token = ''
-      localStorage.setItem('authenticated', false)
-      localStorage.setItem('token', '')
+      localStorage.removeItem('authenticated')
+      localStorage.removeItem('token')
     }
   },
   actions: {

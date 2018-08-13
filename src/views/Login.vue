@@ -1,10 +1,10 @@
 <template>
   <div class="login">
+    <h1>Sign in</h1>
     <ol v-if="errors">
       <li v-for="error in errors" :key="error.id">{{error}}</li>
     </ol>
-    <form class="login" @submit.prevent="login">
-      <h1>Sign in</h1>
+    <form @submit.prevent="login">
       <label>User name</label>
       <input required v-model="username" type="text" />
       <label>Password</label>
