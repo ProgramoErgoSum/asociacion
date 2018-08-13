@@ -5,9 +5,9 @@ node_js:
 
 sudo: false
 
-# branches:
-  # only:
-    # - master
+branches:
+  only:
+    - master
 
 install:
  - npm install
