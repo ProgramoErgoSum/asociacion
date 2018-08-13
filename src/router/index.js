@@ -48,7 +48,7 @@ const router = new Router({
           component: resolve => require(['@/views/Partners/List'], resolve)
         },
         {
-          path: '/partners/:id_partner',
+          path: '/partners/:idPartner',
           name: 'partners-view',
           component: resolve => require(['@/views/Partners/View'], resolve)
         }
