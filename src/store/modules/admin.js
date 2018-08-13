@@ -19,8 +19,8 @@ const user = {
     [ADMIN_LOGOUT]: function (state) {
       state.authenticated = false
       state.token = ''
-      localStorage.removeItem('authenticated')
-      localStorage.removeItem('token')
+      localStorage.setItem('authenticated', false)
+      localStorage.setItem('token', '')
     }
   },
   actions: {

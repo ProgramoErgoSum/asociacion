@@ -24,10 +24,7 @@ const router = new Router({
     {
       path: '/logout',
       name: 'logout',
-      beforeEnter: (to, from, next) => {
-        // this.LOGOUT()
-        // next('/login')
-      }
+      component: resolve => require(['@/views/Logout'], resolve)
     },
     {
       path: '/',
