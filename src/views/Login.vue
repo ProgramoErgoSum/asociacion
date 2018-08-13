@@ -3,7 +3,6 @@
     <ol v-if="errors">
       <li v-for="error in errors" :key="error.id">{{error}}</li>
     </ol>
-    {{response}}
     <form class="login" @submit.prevent="login">
       <h1>Sign in</h1>
       <label>User name</label>
@@ -16,7 +15,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapMutations } from 'vuex'
+import { login } from '../http/admin'
 
 export default {
   name: 'login',
@@ -24,24 +24,22 @@ export default {
     return {
       username: null,
       password: null,
-      errors: [],
-      response: null
+      errors: []
     }
   },
   methods: {
+    ...mapMutations(['LOGIN']),
     login: function () {
-      let credentials = {
+      login({
         _username: this.username,
         _password: this.password
-      }
-      axios
-        .post('http://localhost:8000/api/v1/tokens', credentials)
+      })
         .then(response => {
-          this.$store.state.user.authenticated = true
-          localStorage.setItem('jwt', response.data.token)
+          this.LOGIN(response.data)
+          this.$router.push('/dashboard')
         })
         .catch(err => {
-          this.errors.push(err.response.data)
+          this.errors.push(err.message)
         })
     }
   }

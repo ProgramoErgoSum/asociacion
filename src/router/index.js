@@ -1,12 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Login from '@/views/Login'
-import Layout from '@/views/Layout'
-import Dashboard from '@/views/Dashboard'
-import PartnersList from '@/views/Partners/List'
-import PartnersView from '@/views/Partners/View'
-import Error404 from '@/views/Error404'
+import store from '../store'
 
 Vue.use(Router)
 
@@ -15,9 +9,9 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: resolve => require(['@/views/Login'], resolve),
       beforeEnter: (to, from, next) => {
-        if (localStorage.getItem('token')) {
+        if (store.state.user.authenticated) {
           next('/dashboard')
         } else {
           next()
@@ -31,13 +25,13 @@ const router = new Router({
       path: '/logout',
       name: 'logout',
       beforeEnter: (to, from, next) => {
-        delete localStorage.token
-        next('/login')
+        // this.LOGOUT()
+        // next('/login')
       }
     },
     {
       path: '/',
-      component: Layout,
+      component: resolve => require(['@/views/Layout'], resolve),
       children: [
         {
           path: '/',
@@ -46,32 +40,25 @@ const router = new Router({
         {
           path: '/dashboard',
           name: 'dashboard',
-          component: Dashboard
+          component: resolve => require(['@/views/Dashboard'], resolve)
         },
         {
           path: '/partners',
           name: 'partners',
-          component: PartnersList
+          component: resolve => require(['@/views/Partners/List'], resolve)
         },
         {
           path: '/partners/:id_partner',
           name: 'partners-view',
-          component: PartnersView
+          component: resolve => require(['@/views/Partners/View'], resolve)
         }
       ]
-    },
-    {
-      path: '*',
-      component: Error404,
-      meta: {
-        isPublic: true
-      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (!to.matched.some(record => record.meta.isPublic) && !localStorage.getItem('token') && to.path !== '/login') {
+  if (!store.state.user.authenticated && !to.meta.isPublic) {
     next('/login')
   } else {
     next()
