@@ -15,11 +15,15 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
-const post = (url, data = {}) => {
+/**
+ * @param  {string} url
+ * @param  {object} params = {}
+ */
+const fetch = (url, params = {}) => {
   return new Promise((resolve, reject) => {
-    axios.post(url, data)
-      .then(res => {
-        resolve(res.data)
+    axios.get(url, { params })
+      .then(response => {
+        resolve(response.data)
       })
       .catch(err => {
         reject(err)
@@ -27,4 +31,20 @@ const post = (url, data = {}) => {
   })
 }
 
-export { axios, post }
+/**
+ * @param  {string} url
+ * @param  {object} data = {}
+ */
+const post = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.post(url, data)
+      .then(response => {
+        resolve(response.data)
+      })
+      .catch(error => {
+        reject(error)
+      })
+  })
+}
+
+export { axios, fetch, post }

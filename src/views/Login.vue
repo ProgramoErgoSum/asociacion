@@ -16,7 +16,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { login } from '../http/admin'
+import { postTokens } from '../http/admin'
 
 export default {
   name: 'login',
@@ -28,18 +28,18 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['LOGIN']),
+    ...mapMutations(['ADMIN_LOGIN']),
     login: function () {
-      login({
+      postTokens({
         _username: this.username,
         _password: this.password
       })
         .then(response => {
-          this.LOGIN(response.data)
+          this.ADMIN_LOGIN(response)
           this.$router.push('/dashboard')
         })
-        .catch(err => {
-          this.errors.push(err.message)
+        .catch(error => {
+          this.errors.push(error.message)
         })
     }
   }

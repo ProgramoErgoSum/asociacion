@@ -1,22 +1,22 @@
-export const LOGIN = 'LOGIN'
-export const LOGOUT = 'LOGOUT'
+export const ADMIN_LOGIN = 'ADMIN_LOGIN'
+export const ADMIN_LOGOUT = 'ADMIN_LOGOUT'
 
 const user = {
   state: {
-    authenticated: localStorage.getItem('authenticated') || false,
-    token: localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || '',
+    authenticated: localStorage.getItem('token') !== ''
   },
   getters: {
 
   },
   mutations: {
-    [LOGIN]: function (state, user) {
+    [ADMIN_LOGIN]: function (state, response) {
       state.authenticated = true
-      state.token = user.token
+      state.token = response.token
       localStorage.setItem('authenticated', true)
-      localStorage.setItem('token', user.token)
+      localStorage.setItem('token', response.token)
     },
-    [LOGOUT]: function (state) {
+    [ADMIN_LOGOUT]: function (state) {
       state.authenticated = false
       state.token = ''
       localStorage.removeItem('authenticated')

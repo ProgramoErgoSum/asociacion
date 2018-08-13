@@ -1,7 +1,10 @@
 import * as http from './base'
 
-const login = (credentials) => {
+/**
+ * @param {object} credentials
+ */
+const postTokens = (credentials) => {
   return http.post('/tokens', credentials)
 }
 
-export { login }
+export { postTokens }

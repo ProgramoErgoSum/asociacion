@@ -10,19 +10,24 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { getPartners } from '../../http/partners'
 
 export default {
   name: 'list',
   data () {
     return {
-      partners: []
+      partners: [],
+      errors: []
     }
   },
-  created () {
-    axios
-      .get('http://localhost:8000/api/v1/partners', { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('jwt') })
-      .then(response => { this.partners = response.data })
+  mounted () {
+    getPartners()
+      .then(response => {
+        this.partners = response
+      })
+      .catch(error => {
+        this.errors.push(error.message)
+      })
   }
 }
 </script>
