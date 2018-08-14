@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
-    <el-container>
-      <el-aside>
+    <el-container class="main-container">
+      <el-aside class="el-aside">
         <Sidebar/>
       </el-aside>
       <el-container>
@@ -40,5 +40,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.el-aside {
+  width: 180px !important;
+  height: 100%;
+  position: fixed;
+  font-size: 0px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  overflow: hidden;
+  background: #333;
+}
+.main-container {
+  min-height: 100%;
+  transition: margin-left .28s;
+  margin-left: 180px;
+  position: relative;
+}
 </style>

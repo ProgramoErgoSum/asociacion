@@ -37,17 +37,31 @@ const router = new Router({
         {
           path: '/dashboard',
           name: 'dashboard',
-          component: resolve => require(['@/views/Dashboard'], resolve)
+          component: resolve => require(['@/views/Dashboard'], resolve),
+          meta: {
+            title: 'Dashboard',
+            icon: ''
+          }
         },
         {
           path: '/partners',
           name: 'partners',
-          component: resolve => require(['@/views/Partners/List'], resolve)
-        },
-        {
-          path: '/partners/:idPartner',
-          name: 'partners-view',
-          component: resolve => require(['@/views/Partners/View'], resolve)
+          component: resolve => require(['@/views/Partners/List'], resolve),
+          meta: {
+            title: 'Socios',
+            icon: ''
+          },
+          children: [
+            {
+              path: '/partners/:idPartner',
+              name: 'partners-view',
+              component: resolve => require(['@/views/Partners/View'], resolve),
+              meta: {
+                title: 'Vista',
+                icon: ''
+              }
+            }
+          ]
         }
       ]
     }
