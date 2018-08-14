@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// import router from '../router'
+import router from '../router'
 import store from '../store'
 
 axios.defaults.timeout = 10000
@@ -12,6 +12,27 @@ axios.interceptors.request.use(config => {
   }
   return config
 }, err => {
+  return Promise.reject(err)
+})
+
+axios.interceptors.response.use(response => {
+  return response
+}, err => {
+  if (err.response !== undefined) {
+    console.log(err.response.data.code)
+    switch (err.response.data.code) {
+      case 401: // Invalid JWT token or Expired JWT Token
+        store.commit('ADMIN_LOGOUT')
+        router.push('/login')
+        break
+      default:
+        return Promise.reject(err.response.data)
+    }
+  }
+  if (err.message === 'Network Error') {
+    store.commit('ADMIN_LOGOUT')
+    router.push('/login')
+  }
   return Promise.reject(err)
 })
 

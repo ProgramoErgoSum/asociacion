@@ -1,9 +1,3 @@
-<template>
-  <div class="logout">
-    <h1>Logout</h1>
-  </div>
-</template>
-
 <script>
 import { mapMutations } from 'vuex'
 
@@ -21,12 +15,8 @@ export default {
     ...mapMutations(['ADMIN_LOGOUT']),
     logout: function () {
       this.ADMIN_LOGOUT()
-      this.$router.push('/dashboard')
+      this.$router.push('/login')
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>
