@@ -28,7 +28,7 @@ const router = new Router({
     },
     {
       path: '/',
-      component: resolve => require(['@/views/Layout'], resolve),
+      component: resolve => require(['@/views/Layout/Layout.vue'], resolve),
       children: [
         {
           path: '/',
