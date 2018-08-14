@@ -7,7 +7,8 @@ import store from './store'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(Element)
+import locale from 'element-ui/lib/locale/lang/es'
+Vue.use(Element, { locale })
 
 Vue.config.productionTip = false
 

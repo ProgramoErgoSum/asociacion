@@ -29,6 +29,10 @@ axios.interceptors.response.use(response => {
         return Promise.reject(err.response.data)
     }
   }
+  if (err.message === 'Network Error') {
+    store.commit('ADMIN_LOGOUT')
+    router.push('/login')
+  }
   return Promise.reject(err)
 })
 

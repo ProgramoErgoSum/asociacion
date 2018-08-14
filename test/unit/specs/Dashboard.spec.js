@@ -5,7 +5,7 @@ describe('Login.vue', () => {
   it('Admin is not log in', () => {
     const Constructor = Vue.extend(Login)
     const vm = new Constructor().$mount()
-    expect(vm.$el.querySelector('h1').textContent)
-      .toEqual('Sign in')
+    expect(vm.$el.querySelector('h3').textContent)
+      .toEqual('Acceso')
   })
 })
