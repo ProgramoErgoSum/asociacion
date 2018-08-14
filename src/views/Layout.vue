@@ -1,14 +1,28 @@
 <template>
   <div class="layout">
-    Layout
-    https://element.eleme.io/#/es/component/container
-    <router-view/>
+    <el-container>
+      <el-aside width="200px">
+        <sidebar/>
+      </el-aside>
+      <el-container>
+        <el-header>Cabecera</el-header>
+        <el-main>
+          <router-view/>
+        </el-main>
+        <el-footer>Pie de página</el-footer>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
+import Sidebar from '@/components/Sidebar'
+
 export default {
-  name: 'layout',
+  name: 'Layout',
+  components: {
+    Sidebar
+  },
   data () {
     return {
 
@@ -17,6 +31,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

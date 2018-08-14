@@ -1,11 +1,31 @@
 <template>
   <div class="list">
     <h1>List</h1>
-    <ul>
-      <li v-for="partner in partners" :key="partner.id">
-        {{ partner.name }}
-      </li>
-    </ul>
+    <el-table :data="partners" style="width: 100%">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <ul v-if="props.row.subscriptions">
+            <li v-for="subscription in props.row.subscriptions" :key="subscription.id">
+              <p>{{ subscription.in_date }} - {{ subscription.out_date }}</p>
+              <p>{{ subscription.info }} - {{ subscription.price }}</p>
+            </li>
+          </ul>
+        </template>
+      </el-table-column>
+      <el-table-column prop="code" label="Código"></el-table-column>
+      <el-table-column prop="name" label="Nombre"></el-table-column>
+      <el-table-column prop="surname" label="Apellidos"></el-table-column>
+      <el-table-column prop="email" label="Email"></el-table-column>
+      <el-table-column prop="role" label="Rol"></el-table-column>
+      <el-table-column prop="cdate" label="Fecha alta"></el-table-column>
+      <el-table-column label="" width="180" align="center">
+        <template slot-scope="props">
+          <el-button @click="$router.push('/partners/' + props.row.id)" type="text" size="small">
+            <i class="iconfont icon-details"></i>Detalle
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -16,8 +36,7 @@ export default {
   name: 'list',
   data () {
     return {
-      partners: [],
-      errors: []
+      partners: []
     }
   },
   mounted () {
@@ -25,13 +44,13 @@ export default {
       .then(response => {
         this.partners = response
       })
-      .catch(error => {
-        this.errors.push(error.message)
+      .catch(err => {
+        this.$message({ type: 'error', message: err.message })
       })
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
