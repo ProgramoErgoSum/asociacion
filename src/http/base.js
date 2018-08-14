@@ -15,6 +15,15 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
+axios.interceptors.response.use(response => {
+  return response
+}, err => {
+  if (err.response !== undefined) {
+    return Promise.reject(err.response.data)
+  }
+  return Promise.reject(err)
+})
+
 /**
  * @param  {string} url
  * @param  {object} params = {}

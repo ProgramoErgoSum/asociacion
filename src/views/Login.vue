@@ -1,16 +1,23 @@
 <template>
   <div class="login">
-    <h1>Sign in</h1>
-    <ol v-if="errors">
-      <li v-for="error in errors" :key="error.id">{{error}}</li>
-    </ol>
-    <form @submit.prevent="login">
-      <label>User name</label>
-      <input required v-model="username" type="text" />
-      <label>Password</label>
-      <input required v-model="password" type="password"/>
-      <button type="submit">Login</button>
-    </form>
+    <div class="form">
+      <el-row>
+        <el-col :span="24">
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="login-container">
+            <h3 class="title">Acceso</h3>
+            <el-form-item prop="username">
+              <el-input v-model="ruleForm.username" type="text" auto-complete="off" placeholder="Username" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input v-model="ruleForm.password" type="password" auto-complete="off" placeholder="Password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">Login</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -19,33 +26,70 @@ import { mapMutations } from 'vuex'
 import { postTokens } from '../http/admin'
 
 export default {
-  name: 'login',
+  name: 'Login',
   data () {
     return {
-      username: null,
-      password: null,
-      errors: []
+      ruleForm: {
+        username: null,
+        password: null
+      },
+      errors: [],
+      rules: {
+        username: [{ required: true, message: 'Introduce el nombre de usuario', trigger: 'blur' }],
+        password: [{ required: true, message: 'Introduce la contraseña', trigger: 'blur' }]
+      }
     }
   },
   methods: {
     ...mapMutations(['ADMIN_LOGIN']),
-    login: function () {
-      postTokens({
-        _username: this.username,
-        _password: this.password
+    submitForm: function (formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          postTokens({
+            _username: this.ruleForm.username,
+            _password: this.ruleForm.password
+          })
+            .then(response => {
+              this.ADMIN_LOGIN(response)
+              this.$router.push('/dashboard')
+            })
+            .catch(err => {
+              this.$message({ type: 'error', message: err.message })
+            })
+        }
+        this.$refs[formName].resetFields()
       })
-        .then(response => {
-          this.ADMIN_LOGIN(response)
-          this.$router.push('/dashboard')
-        })
-        .catch(error => {
-          this.errors.push(error.message)
-        })
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.login {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+}
+.login-container {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 90px auto;
+  width: 350px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  .title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
+  }
+  button {
+    display: block;
+    width: 100%;
+  }
+}
 </style>
