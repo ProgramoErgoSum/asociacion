@@ -46,18 +46,33 @@ const router = new Router({
         {
           path: '/partners',
           name: 'partners',
-          component: resolve => require(['@/views/Partners/List'], resolve),
-          meta: {
-            title: 'Socios',
-            icon: ''
-          },
+          component: resolve => require(['@/views/Partners/Index.vue'], resolve),
+          redirect: 'partner-list',
           children: [
             {
-              path: '/partners/:idPartner',
+              path: '',
+              name: 'partners-list',
+              component: resolve => require(['@/views/Partners/List'], resolve),
+              meta: {
+                title: 'Vista',
+                icon: ''
+              }
+            },
+            {
+              path: ':idPartner/view',
               name: 'partners-view',
               component: resolve => require(['@/views/Partners/View'], resolve),
               meta: {
                 title: 'Vista',
+                icon: ''
+              }
+            },
+            {
+              path: ':idPartner/edit',
+              name: 'partners-edit',
+              component: resolve => require(['@/views/Partners/View'], resolve),
+              meta: {
+                title: 'Editar',
                 icon: ''
               }
             }

@@ -20,8 +20,15 @@
       <el-table-column prop="cdate" label="Fecha alta"></el-table-column>
       <el-table-column label="" width="180" align="center">
         <template slot-scope="props">
-          <el-button @click="$router.push('/partners/' + props.row.id)" type="text" size="small">
-            <i class="iconfont icon-details"></i>Detalle
+          <el-button @click="$router.push('/partners/' + props.row.id  + '/view')" type="text" size="small">
+            <i class="iconfont icon-details"></i>Ver
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="" width="180" align="center">
+        <template slot-scope="props">
+          <el-button @click="$router.push('/partners/' + props.row.id  + '/edit')" type="text" size="small">
+            <i class="iconfont icon-details"></i>Editar
           </el-button>
         </template>
       </el-table-column>
