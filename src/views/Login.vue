@@ -1,22 +1,29 @@
 <template>
-  <div class="login">
-    <div class="form">
-      <el-row>
-        <el-col :span="24">
-          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="login-container">
-            <h3 class="title">Acceso</h3>
-            <el-form-item prop="username">
-              <el-input v-model="ruleForm.username" type="text" auto-complete="off" placeholder="Username" @keyup.enter.native="submitForm('ruleForm')"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input v-model="ruleForm.password" type="password" auto-complete="off" placeholder="Password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">Login</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
+  <div class="app flex-row align-items-center">
+    <div class="container">
+      <b-row class="justify-content-center">
+        <b-col md="6">
+          <b-card-group class="login">
+            <b-card no-body class="p-4">
+              <b-card-body>
+                <h1 class="title">Acceso</h1>
+                <b-form @submit="onSubmit">
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend><b-input-group-text><i class="fa fa-user"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="text" class="form-control" v-model="form.username" placeholder="Username" required />
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend><b-input-group-text><i class="fa fa-lock"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="password" class="form-control" v-model="form.password" placeholder="Password" required />
+                  </b-input-group>
+                  <b-alert v-if="error" variant="danger" show>{{error}}</b-alert>
+                  <b-button type="submit" variant="primary">Login</b-button>
+                </b-form>
+              </b-card-body>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
     </div>
   </div>
 </template>
@@ -29,58 +36,42 @@ export default {
   name: 'Login',
   data () {
     return {
-      ruleForm: {
+      error: null,
+      form: {
         username: null,
         password: null
-      },
-      errors: [],
-      rules: {
-        username: [{ required: true, message: 'Introduce el nombre de usuario', trigger: 'blur' }],
-        password: [{ required: true, message: 'Introduce la contraseña', trigger: 'blur' }]
       }
     }
   },
   methods: {
     ...mapMutations(['ADMIN_LOGIN']),
-    submitForm: function (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          postTokens({
-            _username: this.ruleForm.username,
-            _password: this.ruleForm.password
-          })
-            .then(response => {
-              this.ADMIN_LOGIN(response)
-              this.$router.push('/dashboard')
-            })
-            .catch(err => {
-              this.$message({ type: 'error', message: err.message })
-            })
-        }
-        this.$refs[formName].resetFields()
+    onSubmit: function () {
+      postTokens({
+        _username: this.form.username,
+        _password: this.form.password
       })
+        .then(response => {
+          this.ADMIN_LOGIN(response)
+          this.$router.push('/dashboard')
+        })
+        .catch(err => {
+          this.error = err.message
+        })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.login {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.flex-row {
+  display: flex;
+  min-height: 100vh;
   background: #f0f0f0;
 }
-.login-container {
+.login {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   -moz-border-radius: 5px;
-  background-clip: padding-box;
-  margin: 90px auto;
-  width: 350px;
-  padding: 35px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
   .title {
     margin: 0px auto 40px auto;

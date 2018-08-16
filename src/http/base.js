@@ -19,7 +19,6 @@ axios.interceptors.response.use(response => {
   return response
 }, err => {
   if (err.response !== undefined) {
-    console.log(err.response.data.code)
     switch (err.response.data.code) {
       case 401: // Invalid JWT token or Expired JWT Token
         store.commit('ADMIN_LOGOUT')

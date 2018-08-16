@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!--<img src="./assets/logo.png">-->
     <router-view/>
   </div>
 </template>
@@ -11,13 +10,10 @@ export default {
 }
 </script>
 
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  font-size:  14px;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
+<style lang="scss">
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+$fa-font-path: '~font-awesome/fonts/';
+@import 'font-awesome/scss/font-awesome.scss';
 </style>
