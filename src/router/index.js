@@ -29,11 +29,8 @@ const router = new Router({
     {
       path: '/',
       component: resolve => require(['@/views/Layout/Layout.vue'], resolve),
+      redirect: '/dashboard',
       children: [
-        {
-          path: '/',
-          redirect: '/dashboard'
-        },
         {
           path: '/dashboard',
           name: 'dashboard',
@@ -47,7 +44,7 @@ const router = new Router({
           path: '/partners',
           name: 'partners',
           component: resolve => require(['@/views/Partners/Index'], resolve),
-          redirect: 'partner-list',
+          redirect: '/partners',
           meta: {
             title: 'Socios',
             icon: ''
@@ -56,23 +53,18 @@ const router = new Router({
             {
               path: '',
               name: 'partners-list',
-              component: resolve => require(['@/views/Partners/List'], resolve)
+              component: resolve => require(['@/views/Partners/List'], resolve),
+              meta: {
+                title: 'Lista',
+                icon: ''
+              }
             },
             {
               path: 'create',
               name: 'partners-create',
               component: resolve => require(['@/views/Partners/Create'], resolve),
               meta: {
-                title: 'Vista',
-                icon: ''
-              }
-            },
-            {
-              path: ':idPartner/view',
-              name: 'partners-view',
-              component: resolve => require(['@/views/Partners/View'], resolve),
-              meta: {
-                title: 'Vista',
+                title: 'Crear',
                 icon: ''
               }
             },
