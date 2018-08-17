@@ -20,10 +20,7 @@
     </AppHeader>
     <div class="app-body">
       <AppSidebar fixed>
-        <SidebarHeader/>
-        <SidebarForm/>
-          <SidebarNav :navItems="nav"></SidebarNav>
-        <SidebarFooter/>
+        <SidebarNav :navItems="nav"></SidebarNav>
       </AppSidebar>
       <main class="main">
         <Breadcrumb :list="list"/>
@@ -32,17 +29,17 @@
         </div>
       </main>
     </div>
-    <TheFooter>
+    <footer class="app-footer">
       <div class="ml-auto">
         <span class="mr-1">Powered by</span>
         <a href="https://github.com/ProgramoErgoSum">ProgramoErgoSum</a>
       </div>
-    </TheFooter>
+    </footer>
   </div>
 </template>
 
 <script>
-import { Header as AppHeader, SidebarToggler, Sidebar as AppSidebar, HeaderDropdown as AppHeaderDropdown, SidebarFooter, SidebarForm, SidebarHeader, SidebarMinimizer, SidebarNav, Aside as AppAside, AsideToggler, Footer as TheFooter } from '@coreui/vue'
+import { Header as AppHeader, SidebarToggler, Sidebar as AppSidebar, HeaderDropdown as AppHeaderDropdown, SidebarMinimizer, SidebarNav, Aside as AppAside, AsideToggler } from '@coreui/vue'
 import Breadcrumb from './components/Breadcrumb.vue'
 export default {
   name: 'Layout',
@@ -52,12 +49,7 @@ export default {
     AppHeaderDropdown,
     AppSidebar,
     AppAside,
-    TheFooter,
-    // Breadcrumb,
-    SidebarForm,
-    SidebarFooter,
     SidebarToggler,
-    SidebarHeader,
     SidebarNav,
     SidebarMinimizer,
 

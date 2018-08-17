@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     getName (item) {
-      console.log(item)
       return item.meta && item.meta.title ? item.meta.title : item.name || null
     },
     isLast (index) {
