@@ -1,16 +1,30 @@
 <template>
-  <div class="login">
-    <h1>Sign in</h1>
-    <ol v-if="errors">
-      <li v-for="error in errors" :key="error.id">{{error}}</li>
-    </ol>
-    <form @submit.prevent="login">
-      <label>User name</label>
-      <input required v-model="username" type="text" />
-      <label>Password</label>
-      <input required v-model="password" type="password"/>
-      <button type="submit">Login</button>
-    </form>
+  <div class="app flex-row align-items-center">
+    <div class="container">
+      <b-row class="justify-content-center">
+        <b-col md="6">
+          <b-card-group class="login">
+            <b-card no-body class="p-4">
+              <b-card-body>
+                <h1 class="title">Acceso</h1>
+                <b-form @submit="onSubmit">
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend><b-input-group-text><i class="fa fa-user"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="text" class="form-control" v-model="form.username" placeholder="Username" required />
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend><b-input-group-text><i class="fa fa-lock"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="password" class="form-control" v-model="form.password" placeholder="Password" required />
+                  </b-input-group>
+                  <b-alert v-if="error" variant="danger" show>{{error}}</b-alert>
+                  <b-button type="submit" variant="primary">Login</b-button>
+                </b-form>
+              </b-card-body>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
+    </div>
   </div>
 </template>
 
@@ -19,33 +33,54 @@ import { mapMutations } from 'vuex'
 import { postTokens } from '../http/admin'
 
 export default {
-  name: 'login',
+  name: 'Login',
   data () {
     return {
-      username: null,
-      password: null,
-      errors: []
+      error: null,
+      form: {
+        username: null,
+        password: null
+      }
     }
   },
   methods: {
     ...mapMutations(['ADMIN_LOGIN']),
-    login: function () {
+    onSubmit: function () {
       postTokens({
-        _username: this.username,
-        _password: this.password
+        _username: this.form.username,
+        _password: this.form.password
       })
         .then(response => {
           this.ADMIN_LOGIN(response)
           this.$router.push('/dashboard')
         })
-        .catch(error => {
-          this.errors.push(error.message)
+        .catch(err => {
+          this.error = err.message
         })
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.flex-row {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f0f0;
+}
+.login {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  box-shadow: 0 0 25px #cac6c6;
+  .title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
+  }
+  button {
+    display: block;
+    width: 100%;
+  }
+}
 </style>

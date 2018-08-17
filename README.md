@@ -2,4 +2,4 @@
 
 [![Build Status](https://travis-ci.org/ProgramoErgoSum/asociacion.svg?branch=master)](https://travis-ci.org/ProgramoErgoSum/asociacion)
 
-> You can read more about this repo in our Wiki section.
+> You can read more about this repo in our [Wiki](https://github.com/ProgramoErgoSum/asociacion/wiki) section.

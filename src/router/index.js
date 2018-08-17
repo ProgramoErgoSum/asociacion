@@ -28,26 +28,65 @@ const router = new Router({
     },
     {
       path: '/',
-      component: resolve => require(['@/views/Layout'], resolve),
+      component: resolve => require(['@/views/Layout/Layout.vue'], resolve),
+      redirect: '/dashboard',
       children: [
-        {
-          path: '/',
-          redirect: '/dashboard'
-        },
         {
           path: '/dashboard',
           name: 'dashboard',
-          component: resolve => require(['@/views/Dashboard'], resolve)
+          component: resolve => require(['@/views/Dashboard'], resolve),
+          meta: {
+            title: 'Dashboard',
+            icon: ''
+          }
         },
         {
           path: '/partners',
           name: 'partners',
-          component: resolve => require(['@/views/Partners/List'], resolve)
-        },
-        {
-          path: '/partners/:idPartner',
-          name: 'partners-view',
-          component: resolve => require(['@/views/Partners/View'], resolve)
+          component: resolve => require(['@/views/Partners/Index'], resolve),
+          redirect: '/partners',
+          meta: {
+            title: 'Socios',
+            icon: ''
+          },
+          children: [
+            {
+              path: '',
+              name: 'partners-list',
+              component: resolve => require(['@/views/Partners/List'], resolve),
+              meta: {
+                title: 'Lista',
+                icon: ''
+              }
+            },
+            {
+              path: 'create',
+              name: 'partners-create',
+              component: resolve => require(['@/views/Partners/Create'], resolve),
+              meta: {
+                title: 'Crear',
+                icon: ''
+              }
+            },
+            {
+              path: ':idPartner/edit',
+              name: 'partners-edit',
+              component: resolve => require(['@/views/Partners/Edit'], resolve),
+              meta: {
+                title: 'Editar',
+                icon: ''
+              }
+            },
+            {
+              path: ':idPartner/delete',
+              name: 'partners-delete',
+              component: resolve => require(['@/views/Partners/Delete'], resolve),
+              meta: {
+                title: 'Borrar',
+                icon: ''
+              }
+            }
+          ]
         }
       ]
     }

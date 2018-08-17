@@ -12,8 +12,7 @@ export default {
   name: 'view',
   data () {
     return {
-      partner: [],
-      errors: []
+      partner: []
     }
   },
   mounted () {
@@ -21,8 +20,8 @@ export default {
       .then(response => {
         this.partner = response
       })
-      .catch(error => {
-        this.errors.push(error.message)
+      .catch(err => {
+        this.$message({ type: 'error', message: err.message })
       })
   }
 }
