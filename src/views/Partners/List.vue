@@ -93,10 +93,12 @@ export default {
       return date && date.toISOString().split('T')[0]
     },
     inDate (subscriptions) {
+      return null
       let first = subscriptions.slice(0)[0]
       return this.toDate(first.in_date)
     },
     outDate (subscriptions) {
+      return null
       let last = subscriptions.slice(-1)[0]
       return this.toDate(last.in_date)
     }

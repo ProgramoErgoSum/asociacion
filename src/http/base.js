@@ -4,7 +4,7 @@ import router from '../router'
 import store from '../store'
 
 axios.defaults.timeout = 10000
-axios.defaults.baseURL = 'http://localhost:8000/api/v1'
+axios.defaults.baseURL = 'http://localhost:1180/api/v1'
 
 axios.interceptors.request.use(config => {
   if (store.state.user.token) {

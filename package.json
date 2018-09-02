@@ -12,8 +12,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@coreui/vue": "^2.0.0",
     "@coreui/coreui": "^2.0.4",
-
     "bootstrap": "^4.1.3",
     "bootstrap-vue": "^2.0.0-rc.11",
     "font-awesome": "^4.7.0",
